@@ -1,0 +1,59 @@
+Below is the reasoning behind my evaluation function. 
+
+#	Red	Blue        Start	Won	Points	Depth
+1	5	5	    computer   	human	    2	-
+2	5	5	    human	computer    2	-
+3	6	6	    computer	human	    2	-
+4	6	6	    human	computer    2	-
+5	6	7	    computer    computer    2	-
+6	7	6	    computer    computer    2	-
+7	6	7	    human	human	    2	-
+8	7	6	    human	human	    2	-
+
+The above table shows the outcome of running the red_blue_num.py code against an OPTIMAL opponent.
+
+From this table we can see that the outcome in all the above cases was 2. This was 2 because when it comes down to 1 red stones and 1 blue stones, both optimal opponents would choose blue stones since they are worth more points, that is, both the computer and human when playing the optimal strategy would rather lose 2 points than 3 points. 
+
+This means that at the end, 1 red stones would be left which is 2 points. Depending on the current player, this utility score would be 2 or -2. 
+
+So if the current player is computer (max), that means the previous player was human (min), so that means the computer would look to lose the lowest possible value by selecting blue marble since it has more points, so we return -2.
+
+Similarly, if the current player is human (min), that means the previous player was human (max), so that means the human player would look to lose minimum points by choosing blue marble since it has more points, so we return 2. 
+
+There are other cases, where if one of the stones is 1, then the utility would be [points for a color]*[number of stones]. In this case, if the player is human, then we multiply this with -1 because this is the move that the optimal opponent will play. If the player is computer, then we return the same positive number. This is because with 1 marble left, both playing optimal strategy would look to choose it and win.
+
+The final case is as follows. From the above table, one interesting thing that can be seen is that whenever the sum of the 2 stones is even (or when both stones are positive or negative), the player who started always loses (when both opponents are playing optimal strategy). Using this information, when they player is computer, we multiply 2 with -1. When the player is human, we multiply utility of 2 with 1. 
+
+#	Red	Blue		Start	    Won	    Points Depth
+1	5	5	    computer	human	    2	-
+2	5	5	    human	    computer	2	-
+3	6	6	    computer	human	    2	-
+4	6	6	    human	    computer	2	-
+5	6	7	    computer	computer	2	-
+6	7	6	    computer	computer	2	-
+7	6	7	    human	    human	    2	-
+8	7	6	    human	    human	    2	-
+9	10	10	    computer	human	    2	3
+10	10	10	    human	    Computer	2	3
+11	10	10	    computer	human	    2	1
+12	10	10	    computer	human	    2	8
+13	10	10	    human	    human	    2	1
+14	10	10	    human	    computer	2	8
+15	11	12	    computer	computer	2	3
+16	11	12	    human	    human	    2	3
+17	11	12	    human	    human	    2	1
+18	11	12	    Computer	computer	2 	1
+19	11	12	    computer	computer	2	8
+20	11	12	    human	    human	    2	8
+21	12	11	    computer	computer	2	3
+22	12	11	    human	    human	    2	3
+23	12	11	    human	    Human	    2	1
+24	12	11	    Computer	computer	2	1
+25	12	11	    computer	computer	2	8
+26	12	11	    Human	    human	    2	8
+
+The result of testing the depth limited min max search is in the above table. 
+From this, you can see that it works well in all the cases.
+
+
+
